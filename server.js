@@ -26,7 +26,7 @@ app.get('/api/robots', (req, res) => {
         res.status(200).send(botsArr)
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
-        Rollbar.log("ERROR GETTING ALL BOTS")
+        rollbar.log("ERROR GETTING ALL BOTS")
         res.sendStatus(400)
     }
 })
@@ -39,7 +39,7 @@ app.get('/api/robots/five', (req, res) => {
         res.status(200).send({choices, compDuo})
     } catch (error) {
         console.log('ERROR GETTING FIVE BOTS', error)
-        Rollbar.debug("ERROR GETTING FIVE BOTS")
+        rollbar.debug("ERROR GETTING FIVE BOTS")
         res.sendStatus(400)
     }
 })
@@ -64,16 +64,16 @@ app.post('/api/duel', (req, res) => {
         // comparing the total health to determine a winner
         if (compHealthAfterAttack > playerHealthAfterAttack) {
             playerRecord.losses++
-            Rollbar.log("User loses game")
+            rollbar.log("User loses game")
             res.status(200).send('You lost!')
         } else {
             playerRecord.losses++
-            Rollbar.info("User wons game")
+            rollbar.info("User wons game")
             res.status(200).send('You won!')
         }
     } catch (error) {
         console.log('ERROR DUELING', error)
-        Rollbar.debug("ERROR DUELING")
+        rollbar.debug("ERROR DUELING")
         res.sendStatus(400)
     }
 })
@@ -83,7 +83,7 @@ app.get('/api/player', (req, res) => {
         res.status(200).send(playerRecord)
     } catch (error) {
         console.log('ERROR GETTING PLAYER STATS', error)
-        Rollbar.debug("ERROR GETTING PLAYER STATS")
+        rollbar.debug("ERROR GETTING PLAYER STATS")
         res.sendStatus(400)
     }
 })
