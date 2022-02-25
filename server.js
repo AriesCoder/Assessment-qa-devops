@@ -23,10 +23,11 @@ rollbar.log("Game loads successfully");
 
 app.get('/api/robots', (req, res) => {
     try {
-        res.status(200).send(botsArr)
+        res.status(200).send(bots)       //bugs
+        rollbar.log("successfull getting bots")
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
-        rollbar.log("ERROR GETTING ALL BOTS")
+        rollbar.warning("ERROR GETTING ALL BOTS")
         res.sendStatus(400)
     }
 })
