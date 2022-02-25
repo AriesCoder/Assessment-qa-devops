@@ -19,21 +19,13 @@ const rollbar = new Rollbar({
 })
 
 // record a generic message and send it to Rollbar
-rollbar.log('Hello world!')
-
-// record a generic message and send it to Rollbar
-rollbar.log('Hello world!')
-
-// record a generic message and send it to Rollbar
-rollbar.log("Hello world!");
-
-// record a generic message and send it to Rollbar
 rollbar.log("Game loads successfully");
 
 app.get('/api/robots', (req, res) => {
     try {
+        rollbar.info("successfully getting bots")
         res.status(200).send(botsArr)      
-        rollbar.log("successfull getting bots")
+        
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
         rollbar.warning("ERROR GETTING ALL BOTS")
