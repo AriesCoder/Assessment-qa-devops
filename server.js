@@ -21,7 +21,7 @@ const rollbar = new Rollbar({
 // record a generic message and send it to Rollbar
 rollbar.log("Game loads successfully");
 
-rollbar.log("test");
+rollbar.log("test-2");
 
 app.get('/api/robots', (req, res) => {
     rollbar.log("test 0");
