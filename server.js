@@ -5,12 +5,28 @@ const {bots, playerRecord} = require('./data')
 const {shuffleArray} = require('./utils')
 
 app.use(express.json())
+app.use(express.static(path.join(__dirname, './public/')))
+app.get("/", function(req, res){
+    res.sendFile(path.join(__dirname, './public/index.html'))
+})
+
+// include and initialize the rollbar library with your access token
+const Rollbar = require("rollbar");
+const rollbar = new Rollbar({
+  accessToken: '3264983e64e14fab8e2e1278019e6058',
+  captureUncaught: true,
+  captureUnhandledRejections: true
+});
+
+// record a generic message and send it to Rollbar
+rollbar.log("Game loads successfully");
 
 app.get('/api/robots', (req, res) => {
     try {
         res.status(200).send(botsArr)
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
+        Rollbar.debug("ERROR GETTING ALL BOTS")
         res.sendStatus(400)
     }
 })
@@ -23,6 +39,7 @@ app.get('/api/robots/five', (req, res) => {
         res.status(200).send({choices, compDuo})
     } catch (error) {
         console.log('ERROR GETTING FIVE BOTS', error)
+        Rollbar.debug("ERROR GETTING FIVE BOTS")
         res.sendStatus(400)
     }
 })
@@ -47,13 +64,16 @@ app.post('/api/duel', (req, res) => {
         // comparing the total health to determine a winner
         if (compHealthAfterAttack > playerHealthAfterAttack) {
             playerRecord.losses++
+            Rollbar.log("User loses game")
             res.status(200).send('You lost!')
         } else {
             playerRecord.losses++
+            Rollbar.info("User wons game")
             res.status(200).send('You won!')
         }
     } catch (error) {
         console.log('ERROR DUELING', error)
+        Rollbar.debug("ERROR DUELING")
         res.sendStatus(400)
     }
 })
@@ -63,6 +83,7 @@ app.get('/api/player', (req, res) => {
         res.status(200).send(playerRecord)
     } catch (error) {
         console.log('ERROR GETTING PLAYER STATS', error)
+        Rollbar.debug("ERROR GETTING PLAYER STATS")
         res.sendStatus(400)
     }
 })
