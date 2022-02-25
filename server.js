@@ -11,19 +11,22 @@ app.get("/", function(req, res){
 })
 
 // include and initialize the rollbar library with your access token
-const Rollbar = require("rollbar");
-const rollbar = new Rollbar({
-  accessToken: '3264983e64e14fab8e2e1278019e6058',
+var Rollbar = require("rollbar");
+var rollbar = new Rollbar({
+  accessToken: '83934e1c104349aab92667fa22575a55',
   captureUncaught: true,
   captureUnhandledRejections: true
 });
+
+// record a generic message and send it to Rollbar
+rollbar.log("Hello world!");
 
 // record a generic message and send it to Rollbar
 rollbar.log("Game loads successfully");
 
 app.get('/api/robots', (req, res) => {
     try {
-        res.status(200).send(bots)       //bugs
+        res.status(200).send(botsArr)      
         rollbar.log("successfull getting bots")
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
