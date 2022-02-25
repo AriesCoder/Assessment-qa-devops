@@ -32,7 +32,6 @@ app.get('/api/robots', (req, res) => {
     }
 })
 
-rollbar.log("test2");
 
 app.get('/api/robots/five', (req, res) => {
     try {
