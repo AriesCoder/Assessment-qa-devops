@@ -21,18 +21,14 @@ const rollbar = new Rollbar({
 // record a generic message and send it to Rollbar
 rollbar.log("Game loads successfully");
 
-rollbar.log("test-2");
-
 app.get('/api/robots', (req, res) => {
-    rollbar.log("test 0");
     try {
-        rollbar.info("successfully getting bots")
         res.status(200).send(botsArr)      
-        
+        rollbar.info("successfully getting bots")
     } catch (error) {
         console.log('ERROR GETTING BOTS', error)
         rollbar.warning("ERROR GETTING ALL BOTS")
-        res.sendStatus(400)
+        res.status(400).send('ERROR GETTING BOTS')
     }
 })
 
@@ -47,7 +43,7 @@ app.get('/api/robots/five', (req, res) => {
     } catch (error) {
         console.log('ERROR GETTING FIVE BOTS', error)
         rollbar.debug("ERROR GETTING FIVE BOTS")
-        res.sendStatus(400)
+        res.sendStatus(400).send('ERROR GETTING FIVE BOTS')
     }
 })
 
@@ -81,7 +77,7 @@ app.post('/api/duel', (req, res) => {
     } catch (error) {
         console.log('ERROR DUELING', error)
         rollbar.debug("ERROR DUELING")
-        res.sendStatus(400)
+        res.sendStatus(400).send('ERROR DUELING')
     }
 })
 
@@ -91,7 +87,7 @@ app.get('/api/player', (req, res) => {
     } catch (error) {
         console.log('ERROR GETTING PLAYER STATS', error)
         rollbar.debug("ERROR GETTING PLAYER STATS")
-        res.sendStatus(400)
+        res.sendStatus(400).send("ERROR GETTING PLAYER STATS")
     }
 })
 
