@@ -24,6 +24,7 @@ rollbar.log("Game loads successfully");
 rollbar.log("test");
 
 app.get('/api/robots', (req, res) => {
+    rollbar.log("test 0");
     try {
         rollbar.info("successfully getting bots")
         res.status(200).send(botsArr)      
